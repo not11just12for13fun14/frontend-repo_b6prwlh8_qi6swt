@@ -1,28 +1,282 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { Leaf, ShoppingBag, Hand, Sparkles, Heart, ShieldCheck, TreePine, Recycle } from 'lucide-react'
 
-function App() {
-  const [count, setCount] = useState(0)
+function Nav() {
+  useEffect(() => {
+    const onScroll = () => {
+      const nav = document.getElementById('nav')
+      if (!nav) return
+      if (window.scrollY > 10) {
+        nav.classList.add('bg-white/80', 'backdrop-blur', 'shadow')
+      } else {
+        nav.classList.remove('bg-white/80', 'backdrop-blur', 'shadow')
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <nav id="nav" className="fixed top-0 inset-x-0 z-50 transition-all">
+      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
+        <a href="#home" className="flex items-center gap-2">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-white">
+            <Leaf size={18} />
+          </span>
+          <span className="font-serif text-xl tracking-wide">Bāmbū Atelier</span>
+        </a>
+        <div className="hidden md:flex items-center gap-8 text-sm">
+          <a href="#collection" className="hover:text-emerald-700 transition-colors">Collection</a>
+          <a href="#craft" className="hover:text-emerald-700 transition-colors">Craft</a>
+          <a href="#cause" className="hover:text-emerald-700 transition-colors">Our Cause</a>
+          <a href="#contact" className="hover:text-emerald-700 transition-colors">Contact</a>
         </div>
+        <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 text-white px-4 py-2 text-sm shadow-sm hover:bg-emerald-800 transition-colors">
+          <ShoppingBag size={16} /> Enquire
+        </a>
       </div>
-    </div>
+    </nav>
   )
 }
 
-export default App
+function Hero() {
+  return (
+    <section id="home" className="relative min-h-[90vh] flex items-center">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        <div className="absolute right-[-10%] top-[-20%] h-[60rem] w-[60rem] rounded-full bg-emerald-200/20 blur-3xl" />
+        <div className="absolute left-[-10%] bottom-[-20%] h-[50rem] w-[50rem] rounded-full bg-amber-200/30 blur-3xl" />
+      </div>
+      <div className="mx-auto max-w-7xl px-6 py-28 md:py-40 grid md:grid-cols-2 gap-12">
+        <div className="space-y-6">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-3 py-1 text-xs font-medium shadow-sm ring-1 ring-black/5 w-max">
+            <Sparkles size={14} className="text-amber-600" /> Luxury, crafted by hand in India
+          </p>
+          <h1 className="font-serif text-4xl md:text-6xl leading-tight">
+            Handwoven Bamboo Objects for the Cultured Home
+          </h1>
+          <p className="text-slate-600 md:text-lg">
+            Each piece is woven by master artisans using heritage techniques and sustainably harvested bamboo. Subtle. Timeless. Impeccably finished.
+          </p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <a href="#collection" className="inline-flex items-center gap-2 rounded-full bg-emerald-700 text-white px-6 py-3 shadow hover:bg-emerald-800 transition-colors">
+              <ShoppingBag size={18} /> Shop the Collection
+            </a>
+            <a href="#cause" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 shadow ring-1 ring-black/5 hover:bg-emerald-50 transition-colors">
+              <Heart size={18} className="text-rose-600" /> Our Cause
+            </a>
+          </div>
+          <div className="flex items-center gap-6 pt-6 text-slate-600">
+            <div className="flex items-center gap-2"><ShieldCheck className="text-emerald-700" size={18}/> Lifetime craftsmanship</div>
+            <div className="flex items-center gap-2"><TreePine className="text-emerald-700" size={18}/> Sustainably sourced</div>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
+            <img
+              src="https://images.unsplash.com/photo-1615485737657-2f1b330b06f2?q=80&w=1600&auto=format&fit=crop"
+              alt="Handwoven bamboo luxury bag"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur rounded-2xl p-4 shadow ring-1 ring-black/5 hidden md:block">
+            <div className="flex items-center gap-3">
+              <Hand className="text-emerald-700" />
+              <div>
+                <p className="text-sm font-semibold">100% Artisan-made</p>
+                <p className="text-xs text-slate-600">Assam • Nagaland • Tripura</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Collection() {
+  const products = [
+    {
+      title: 'Kāshi Basket',
+      desc: 'Hand-finished storage with silk-lined lid',
+      price: '₹18,500',
+      img: 'https://images.unsplash.com/photo-1596461404969-9ae70d4a8b40?q=80&w=1400&auto=format&fit=crop'
+    },
+    {
+      title: 'Monsoon Tray',
+      desc: 'Tight-weave serving tray with brass inlay',
+      price: '₹22,000',
+      img: 'https://images.unsplash.com/photo-1615485737511-64f2d3eaf6d8?q=80&w=1400&auto=format&fit=crop'
+    },
+    {
+      title: 'Nilgiri Lamp',
+      desc: 'Ambient table lamp in smoked bamboo',
+      price: '₹36,000',
+      img: 'https://images.unsplash.com/photo-1600850056064-0f0b3f0ba1a0?q=80&w=1400&auto=format&fit=crop'
+    },
+  ]
+
+  return (
+    <section id="collection" className="relative py-24 md:py-32">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(40rem_40rem_at_20%_0%,rgba(16,185,129,0.08),transparent_60%),radial-gradient(35rem_35rem_at_100%_40%,rgba(245,158,11,0.08),transparent_60%)]" />
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="font-serif text-3xl md:text-5xl">Signature Collection</h2>
+            <p className="mt-3 text-slate-600 max-w-xl">Limited releases, numbered pieces, and bespoke commissions. Built to travel through generations.</p>
+          </div>
+          <a href="#contact" className="hidden md:inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 hover:bg-emerald-900 transition-colors">Enquire</a>
+        </div>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          {products.map((p) => (
+            <div key={p.title} className="group">
+              <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5">
+                <img src={p.img} alt={p.title} className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute bottom-0 p-4 text-white">
+                  <p className="text-sm opacity-80">{p.price}</p>
+                  <h3 className="text-xl font-semibold">{p.title}</h3>
+                </div>
+              </div>
+              <p className="mt-3 text-slate-600">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Craft() {
+  const pillars = [
+    {
+      icon: <Hand className="text-emerald-700" size={22} />, title: 'Mastery',
+      text: 'Every weave counts. We collaborate with guilds that preserve centuries-old patterns.'
+    },
+    {
+      icon: <Recycle className="text-emerald-700" size={22} />, title: 'Materials',
+      text: 'Only responsibly harvested bamboo and natural dyes. Zero plastic. Zero compromise.'
+    },
+    {
+      icon: <Sparkles className="text-emerald-700" size={22} />, title: 'Finish',
+      text: 'Hand-sanded edges, silk lining, and brass details. Quiet luxury, made to last.'
+    }
+  ]
+
+  return (
+    <section id="craft" className="py-24 md:py-32 bg-white">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="font-serif text-3xl md:text-5xl">Crafted in small batches</h2>
+            <p className="text-slate-600 md:text-lg">We produce in limited numbers to honor the rhythm of handcraft. Your purchase sustains rural livelihoods and keeps endangered techniques alive.</p>
+            <div className="grid sm:grid-cols-3 gap-6 pt-4">
+              {pillars.map((p) => (
+                <div key={p.title} className="rounded-xl border border-slate-200 p-4 shadow-sm">
+                  <div className="h-10 w-10 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
+                    {p.icon}
+                  </div>
+                  <p className="font-semibold">{p.title}</p>
+                  <p className="text-sm text-slate-600 mt-1">{p.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative">
+            <div className="aspect-[16/12] overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
+              <img src="https://images.unsplash.com/photo-1760328715276-13719b9a53a1?ixid=M3w3OTkxMTl8MHwxfHNlYXJjaHwxfHx3ZWF2aW5nJTIwYmFtYm9vfGVufDB8MHx8fDE3NjI4OTQ1MDl8MA&ixlib=rb-4.1.0&w=1600&auto=format&fit=crop&q=80" alt="Artisan weaving bamboo" className="h-full w-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Cause() {
+  return (
+    <section id="cause" className="relative py-24 md:py-32">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700" />
+      <div className="mx-auto max-w-7xl px-6 text-white">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs tracking-wide uppercase">
+              <Heart size={14} /> Our Cause
+            </p>
+            <h2 className="font-serif text-3xl md:text-5xl mt-4">1 purchase = 10 saplings planted</h2>
+            <p className="mt-4 text-emerald-50/90">We dedicate a portion of every sale to afforestation drives across Northeast India, restoring bamboo groves and protecting biodiversity.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><Leaf size={16}/> Indigenous species</div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><TreePine size={16}/> Community-led</div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><ShieldCheck size={16}/> Transparent impact</div>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/20">
+              <img src="https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6?q=80&w=1400&auto=format&fit=crop" alt="Bamboo forest in India" className="h-full w-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Contact() {
+  return (
+    <section id="contact" className="py-24 md:py-32 bg-white">
+      <div className="mx-auto max-w-3xl px-6 text-center">
+        <h2 className="font-serif text-3xl md:text-5xl">Bespoke commissions and trade</h2>
+        <p className="mt-4 text-slate-600">Looking for a custom weave, hospitality fit-out, or corporate gifting? Share your details and our concierge will be in touch within 24 hours.</p>
+        <form onSubmit={(e) => e.preventDefault()} className="mt-8 grid gap-4 text-left">
+          <div className="grid md:grid-cols-2 gap-4">
+            <input required placeholder="Full name" className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            <input required type="email" placeholder="Email" className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+          </div>
+          <input placeholder="Company (optional)" className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+          <textarea placeholder="Tell us about your project" rows="5" className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+          <div className="flex items-center justify-between pt-2">
+            <p className="text-sm text-slate-500">By enquiring, you support artisan livelihoods across India.</p>
+            <button className="inline-flex items-center gap-2 rounded-full bg-emerald-700 text-white px-6 py-3 shadow hover:bg-emerald-800 transition-colors">
+              <ShoppingBag size={18} /> Submit enquiry
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-10 grid md:grid-cols-3 gap-8 items-center">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-white"><Leaf size={18} /></span>
+          <span className="font-serif text-lg">Bāmbū Atelier</span>
+        </div>
+        <p className="text-slate-600">Quiet luxury, crafted by hand in India. © {new Date().getFullYear()}</p>
+        <div className="flex md:justify-end gap-4 text-sm">
+          <a href="#craft" className="hover:text-emerald-700">Craft</a>
+          <a href="#cause" className="hover:text-emerald-700">Cause</a>
+          <a href="#contact" className="hover:text-emerald-700">Contact</a>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-white text-slate-900">
+      <Nav />
+      <Hero />
+      <Collection />
+      <Craft />
+      <Cause />
+      <Contact />
+      <Footer />
+    </div>
+  )
+}
